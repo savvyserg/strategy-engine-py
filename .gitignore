@@ -1,0 +1,31 @@
+# Python compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# pandas / data files you don't want
+*.csv
+*.parquet
+*.h5
+*.feather
+*.pkl
+
+# Environment / virtualenv
+.env
+venv/
+env/
+*.venv
+
+# IDE/editor stuff
+.vscode/
+.idea/
+.history/
+*.sublime-project
+*.sublime-workspace
+
+# OS stuff
+.DS_Store
+Thumbs.db
