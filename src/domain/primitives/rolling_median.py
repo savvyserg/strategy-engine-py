@@ -37,6 +37,13 @@ class RollingMedian:
         return self._window_size
 
     def update(self, value: float):
+        """
+        Ingest a new value from the data stream to update internal state and metrics.
+
+        This operation is stateful, it:
+          - advances the internal window/buffer.
+          - calculates and stores the `.current` property (if the `.readiness` property is `Readiness.OPERATIONAL`).
+        """
         if not isinstance(value, (int, float)):
              raise TypeError(f"RollingMedian expected value to be a number, got {type(value).__name__}.")
 

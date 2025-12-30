@@ -29,7 +29,11 @@ class LogReturn:
 
     def update(self, value: float):
         """
-        Ingests the current value and (if it is not the very first call) calculates and stores the Log Return from the previous value.
+        Ingest a new value from the data stream to update internal state and metrics.
+
+        This operation is stateful, it:
+          - calculates and stores the `.current` property (if the `.readiness` property is `Readiness.OPERATIONAL`).
+          - updates the internal last seen value.
         """
         if not isinstance(value, (int, float)):
             raise TypeError(f"LogReturn expected value to be a number, got {type(value).__name__}.")
