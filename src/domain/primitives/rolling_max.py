@@ -12,7 +12,7 @@ class RollingMax:
 
         self._window_size: int = window_size
         self._values: deque = deque(maxlen=window_size)
-        self._current: Optional[float] = None # Current computed rolling max (only available if readiness is OPERATIONAL).
+        self._current: Optional[float] = None # Latest calculated rolling max (only available if readiness is OPERATIONAL).
 
     @property
     def readiness(self) -> Readiness:

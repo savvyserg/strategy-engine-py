@@ -15,7 +15,7 @@ class ZScore:
         self._window_size: int = window_size
         self._moving_average = MovingAverage(window_size)
         self._standard_deviation = StandardDeviation(window_size)
-        self._current: Optional[float] = None # Current computed standard deviation (only available if readiness is OPERATIONAL).
+        self._current: Optional[float] = None # Latest calculated standard deviation (only available if readiness is OPERATIONAL).
 
     @property
     def readiness(self) -> Readiness:

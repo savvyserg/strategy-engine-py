@@ -8,7 +8,7 @@ class LogReturn:
         # We only need to remember the last value seen.
         # Initialized to None to represent the "warming up" state.
         self._last_value: Optional[float] = None # Last value seen.
-        self._current: Optional[float] = None # Current computed log return (only available if readiness is OPERATIONAL).
+        self._current: Optional[float] = None # Latest calculated log return (only available if readiness is OPERATIONAL).
 
     @property
     def readiness(self) -> Readiness:
@@ -39,7 +39,7 @@ class LogReturn:
 
         if self._last_value is None:
             # BOOTSTRAPPING:
-            # If this is the first value, we store it but cannot compute a return yet.
+            # If this is the first value, we store it but cannot calculate a return yet.
             self._last_value = value
             return
 

@@ -38,7 +38,7 @@ class RollingConditionCounter(Generic[T]):
         self._data_type = data_type # Stored to allow runtime isinstance() checks on dynamic types.
 
         self._values: Deque[ConditionEvaluation[T]] = deque(maxlen=window_size) # Store values and evaluations for auditability.
-        self._current: Optional[int] = None # Current computed rolling condition count (only available if readiness is OPERATIONAL).
+        self._current: Optional[int] = None # Latest calculated rolling condition count (only available if readiness is OPERATIONAL).
 
     @property
     def readiness(self) -> Readiness:

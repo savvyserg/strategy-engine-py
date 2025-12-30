@@ -12,7 +12,7 @@ class MovingAverage:
 
         self._window_size: int = window_size
         self._values: deque = deque(maxlen=window_size)
-        self._current: Optional[float] = None # Current computed moving average (only available if readiness is OPERATIONAL).
+        self._current: Optional[float] = None # Latest calculated moving average (only available if readiness is OPERATIONAL).
 
     @property
     def readiness(self) -> Readiness:

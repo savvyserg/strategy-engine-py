@@ -13,7 +13,7 @@ They are the "Machinery" of the domain.
 Key Characteristics:
 1. **Stateful:** They maintain their own sliding window buffers.
 2. **Reactive:** They expose a `readiness` state (WARMING_UP vs OPERATIONAL).
-3. **Encapsulated:** They contain all logic required to compute their specific metric.
+3. **Encapsulated:** They contain all logic required to calculate their specific metric.
 
 Exported Primitives:
 --------------------
@@ -24,7 +24,6 @@ Exported Primitives:
 * **StandardDeviation:** Tracks the volatility (dispersion) of a value.
 * **ZScore:** Normalizes a value against its historical mean and volatility.
 * **RollingConditionCounter:** Counts frequency of boolean events (logic filters).
-
 """
 
 from .log_return import LogReturn
