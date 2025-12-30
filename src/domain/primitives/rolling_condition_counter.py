@@ -68,7 +68,7 @@ class RollingConditionCounter(Generic[T]):
         """
         return list(self._values)
 
-    def compute(self, value: T):
+    def update(self, value: T):
         if not isinstance(value, self._data_type):
             expected = self._data_type.__name__ if isinstance(self._data_type, type) else str(self._data_type)
             raise TypeError(f"RollingConditionCounter expected value of type {expected}, got {type(value).__name__}.")

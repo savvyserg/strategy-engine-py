@@ -38,13 +38,13 @@ class ZScore:
     def window_size(self) -> int:
         return self._window_size
 
-    def compute(self, value: float):
+    def update(self, value: float):
         if not isinstance(value, (int, float)):
              raise TypeError(f"ZScore expected value to be a number, got {type(value).__name__}.")
 
-        self._moving_average.compute(value)
+        self._moving_average.update(value)
         mean = self._moving_average.current
-        self._standard_deviation.compute(value)
+        self._standard_deviation.update(value)
         sigma = self._standard_deviation.current
 
         if self.readiness != Readiness.OPERATIONAL:

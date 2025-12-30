@@ -27,7 +27,7 @@ class LogReturn:
             return None
         return self._current
 
-    def compute(self, value: float):
+    def update(self, value: float):
         """
         Ingests the current value and (if it is not the very first call) calculates and stores the Log Return from the previous value.
         """

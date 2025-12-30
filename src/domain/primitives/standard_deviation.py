@@ -82,14 +82,14 @@ class StandardDeviation:
             return None
         return self.current * math.sqrt(steps)
 
-    def compute(self, value: float):
+    def update(self, value: float):
         if not isinstance(value, (int, float)):
             raise TypeError(f"StandardDeviation expected value to be a number, got {type(value).__name__}.")
 
         self._values.append(value) # Add new value. If full, deque automatically pops the oldest value.
 
         # MA
-        self._moving_average.compute(value)
+        self._moving_average.update(value)
         mean = self._moving_average.current
 
         if self.readiness != Readiness.OPERATIONAL:
