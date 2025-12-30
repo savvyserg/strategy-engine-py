@@ -32,6 +32,10 @@ class RollingMedian:
             return None
         return self._current
 
+    @property
+    def window_size(self) -> int:
+        return self._window_size
+
     def compute(self, value: float):
         if not isinstance(value, (int, float)):
              raise TypeError(f"RollingMedian expected value to be a number, got {type(value).__name__}.")

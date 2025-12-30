@@ -57,6 +57,10 @@ class RollingConditionCounter(Generic[T]):
             return None
         return self._current
 
+    @property
+    def window_size(self) -> int:
+        return self._window_size
+
     def get_history(self) -> list[ConditionEvaluation[T]]:
         """
         Returns a copy of the current window buffer.

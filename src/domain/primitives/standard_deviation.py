@@ -38,7 +38,11 @@ class StandardDeviation:
         if self.readiness != Readiness.OPERATIONAL:
             return None
         return self._current
-    
+
+    @property
+    def window_size(self) -> int:
+        return self._window_size
+
     def project_random_walk(self, steps: int) -> Optional[float]:
         """
         Projects the current standard deviation (volatility) forward by N iterations using 
