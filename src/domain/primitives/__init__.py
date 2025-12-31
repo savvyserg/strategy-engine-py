@@ -31,7 +31,7 @@ from .rolling_max import RollingMax
 from .rolling_median import RollingMedian
 from .moving_average import MovingAverage
 from .standard_deviation import StandardDeviation
-from .zscore import ZScore
+from .z_score import ZScore
 from .rolling_condition_counter import RollingConditionCounter
 
 __all__ = [
