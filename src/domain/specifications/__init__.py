@@ -25,3 +25,18 @@ Exported Specifications:
 * **HighVolatilitySpecification:** Determines if the market has high activity (volatility) relative to its baseline.
 * **PositiveTrendSpecification:** Determines if the asset is in a positive trend state.
 """
+
+from .discount import DiscountSpecification
+from .euphoria import EuphoriaSpecification
+from .high_volatility import HighVolatilitySpecification
+from .positive_trend import PositiveTrendSpecification
+
+__all__ = [
+    # Explicitely define module API.
+    # Silence linter about unused imports.
+    # Limit wildcard imports to the intended components.
+    "DiscountSpecification",
+    "EuphoriaSpecification",
+    "HighVolatilitySpecification",
+    "PositiveTrendSpecification",
+]
