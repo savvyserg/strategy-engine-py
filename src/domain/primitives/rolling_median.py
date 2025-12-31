@@ -18,7 +18,7 @@ class RollingMedian:
     @property
     def readiness(self) -> Readiness:
         """
-        Calculates readiness state on the fly.
+        Calculate readiness state on the fly.
         If the buffer is full, we are operational. If not, we are warming up.
         Single source of truth, no risk of state duplication or redundancy.
         """
