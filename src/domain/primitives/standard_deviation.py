@@ -2,9 +2,9 @@ import math
 from collections import deque
 from typing import Optional
 
-from src.domain.primitives.moving_average import MovingAverage
-
 from src.domain.state.readiness import Readiness
+
+from src.domain.primitives.moving_average import MovingAverage
 
 class StandardDeviation:
     def __init__(self, window_size: int):

@@ -1,9 +1,9 @@
 from typing import Optional
 
+from src.domain.state.readiness import Readiness
+
 from src.domain.primitives.moving_average import MovingAverage
 from src.domain.primitives.standard_deviation import StandardDeviation
-
-from src.domain.state.readiness import Readiness
 
 class ZScore:
     def __init__(self, window_size: int):
