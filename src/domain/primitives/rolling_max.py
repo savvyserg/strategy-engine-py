@@ -40,8 +40,8 @@ class RollingMax:
         Ingest a new value from the data stream to update internal state and metrics.
 
         This operation is stateful, it:
-          - advances the internal window/buffer.
-          - calculates and stores the `.current` property (if the `.readiness` property is `Readiness.OPERATIONAL`).
+          - Advances the internal window/buffer.
+          - Calculates and stores the `.current` property (if the `.readiness` property is `Readiness.OPERATIONAL`).
         """
         if not isinstance(value, (int, float)):
             raise TypeError(f"RollingMax expected value to be a number, got {type(value).__name__}.")
