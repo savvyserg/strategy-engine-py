@@ -14,8 +14,7 @@ class LogReturn:
     def readiness(self) -> Readiness:
         """
         Calculate readiness state on the fly.
-        If we have a value, we are operational. If not, we are warming up.
-        Single source of truth, no risk of state duplication or redundancy.
+        If we have a last seen value and a current value, we are operational. If not, we are warming up.
         """
         if self._last_value is not None and self._current is not None:
             return Readiness.OPERATIONAL
@@ -32,8 +31,8 @@ class LogReturn:
         Ingest a new value from the data stream to update internal state and metrics.
 
         This operation is stateful, it:
-          - calculates and stores the `.current` property (if the `.readiness` property is `Readiness.OPERATIONAL`).
-          - updates the internal last seen value.
+          - Calculates and stores the `.current` property (only after the first last seen value, i.e. when the `._last_value` property is NOT `None`).
+          - Updates the internal last seen value.
         """
         if not isinstance(value, (int, float)):
             raise TypeError(f"LogReturn expected value to be a number, got {type(value).__name__}.")
