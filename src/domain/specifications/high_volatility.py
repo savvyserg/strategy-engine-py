@@ -65,7 +65,7 @@ class HighVolatilitySpecification:
         WARNING: this method should only be called if this component's `.readiness` property `Readiness.OPERATIONAL`, otherwise it will throw an error.
         """
         if self.readiness != Readiness.OPERATIONAL:
-            raise RuntimeError(f"HighVolatilitySpecification expected is_satisfied() to only be called when its readiness is OPERATIONAL, but it is {self.readiness}")
+            raise RuntimeError(f"HighVolatilitySpecification expected is_satisfied() to only be called when its readiness is OPERATIONAL, but it is {self.readiness}.")
 
         # NOTE: if readiness is OPERATIONAL, "self._standard_deviation.current" and "self._rolling_median.current" are guaranteed to be floats (instead of None).
         

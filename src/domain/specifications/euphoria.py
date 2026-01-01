@@ -76,7 +76,7 @@ class EuphoriaSpecification:
         WARNING: this method should only be called if this component's `.readiness` property `Readiness.OPERATIONAL`, otherwise it will throw an error.
         """
         if self.readiness != Readiness.OPERATIONAL:
-            raise RuntimeError(f"EuphoriaSpecification expected is_satisfied() to only be called when its readiness is OPERATIONAL, but it is {self.readiness}")
+            raise RuntimeError(f"EuphoriaSpecification expected is_satisfied() to only be called when its readiness is OPERATIONAL, but it is {self.readiness}.")
 
         # NOTE: if readiness is OPERATIONAL, "self._rolling_max.current" is guaranteed to be a float (instead of None).
 

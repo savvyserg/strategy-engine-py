@@ -83,7 +83,7 @@ class RollingConditionCounter(Generic[T]):
         try:
             is_satisfied = self._condition(value)
         except Exception as e:
-            raise RuntimeError(f"RollingConditionCounter failed to execute condition lambda on value {value}: {e}") from e
+            raise RuntimeError(f"RollingConditionCounter failed to execute condition lambda on value {value}: {e}.") from e
 
         if not isinstance(is_satisfied, bool):
              raise TypeError(f"RollingConditionCounter expected condition lambda to return a boolean, got {type(is_satisfied).__name__}.")
