@@ -11,11 +11,11 @@ class PositiveTrendSpecification:
     It ingests a stream of prices and internally maintains the average Log Return within a given window.
     """
     def __init__(self, window_size: int, ma_positive_trend_threshold: float):
-        if not isinstance(window_size, int):
+        if not isinstance(window_size, int) or isinstance(window_size, bool):
             raise TypeError(f"PositiveTrendSpecification expected window_size to be an integer, got {type(window_size).__name__}.")
         if window_size <= 0:
             raise ValueError(f"PositiveTrendSpecification expected window_size to be positive and non-zero, got {window_size}.")
-        if not isinstance(ma_positive_trend_threshold, (int, float)):
+        if not isinstance(ma_positive_trend_threshold, (int, float)) or isinstance(ma_positive_trend_threshold, bool):
             raise TypeError(f"PositiveTrendSpecification expected ma_positive_trend_threshold to be a number, got {type(ma_positive_trend_threshold).__name__}.")
         if ma_positive_trend_threshold < 0:
             raise ValueError(f"PositiveTrendSpecification expected ma_positive_trend_threshold to be positive, got {ma_positive_trend_threshold}.")
@@ -57,7 +57,7 @@ class PositiveTrendSpecification:
 
         This operation is stateful, it advances the internal windows/buffers.
         """
-        if not isinstance(value, (int, float)):
+        if not isinstance(value, (int, float)) or isinstance(value, bool):
             raise TypeError(f"PositiveTrendSpecification expected value to be a number, got {type(value).__name__}.")
 
         self._log_return.update(value)

@@ -7,7 +7,7 @@ from src.domain.primitives.standard_deviation import StandardDeviation
 
 class ZScore:
     def __init__(self, window_size: int):
-        if not isinstance(window_size, int):
+        if not isinstance(window_size, int) or isinstance(window_size, bool):
             raise TypeError(f"ZScore expected window_size to be an integer, got {type(window_size).__name__}.")
         if window_size <= 0:
             raise ValueError(f"ZScore expected window_size to be positive and non-zero, got {window_size}.")
@@ -46,7 +46,7 @@ class ZScore:
           - Advances the internal window/buffer.
           - Calculates and stores the `.current` property (if the `.readiness` property is `Readiness.OPERATIONAL`).
         """
-        if not isinstance(value, (int, float)):
+        if not isinstance(value, (int, float)) or isinstance(value, bool):
              raise TypeError(f"ZScore expected value to be a number, got {type(value).__name__}.")
 
         self._moving_average.update(value)

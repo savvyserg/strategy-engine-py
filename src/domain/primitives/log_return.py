@@ -34,7 +34,7 @@ class LogReturn:
           - Calculates and stores the `.current` property (only after the first last seen value, i.e. when the `._last_value` property is NOT `None`).
           - Updates the internal last seen value.
         """
-        if not isinstance(value, (int, float)):
+        if not isinstance(value, (int, float)) or isinstance(value, bool):
             raise TypeError(f"LogReturn expected value to be a number, got {type(value).__name__}.")
 
         if value <= 0:

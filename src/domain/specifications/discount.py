@@ -11,11 +11,11 @@ class DiscountSpecification:
     It ingests a stream of prices and and internally maintains the Z-Score (calculated from LogReturns) within a given window.
     """
     def __init__(self, window_size: int, z_score_discount_threshold: float):
-        if not isinstance(window_size, int):
+        if not isinstance(window_size, int) or isinstance(window_size, bool):
             raise TypeError(f"DiscountSpecification expected window_size to be an integer, got {type(window_size).__name__}.")
         if window_size <= 0:
             raise ValueError(f"DiscountSpecification expected window_size to be positive and non-zero, got {window_size}.")
-        if not isinstance(z_score_discount_threshold, (int, float)):
+        if not isinstance(z_score_discount_threshold, (int, float)) or isinstance(z_score_discount_threshold, bool):
             raise TypeError(f"DiscountSpecification expected z_score_discount_threshold to be a number, got {type(z_score_discount_threshold).__name__}.")
         
         if z_score_discount_threshold >= 0:
@@ -59,7 +59,7 @@ class DiscountSpecification:
 
         This operation is stateful, it advances the internal windows/buffers.
         """
-        if not isinstance(value, (int, float)):
+        if not isinstance(value, (int, float)) or isinstance(value, bool):
             raise TypeError(f"DiscountSpecification expected value to be a number, got {type(value).__name__}.")
 
         self._log_return.update(value)

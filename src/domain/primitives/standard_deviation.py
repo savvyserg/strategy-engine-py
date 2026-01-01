@@ -8,7 +8,7 @@ from src.domain.primitives.moving_average import MovingAverage
 
 class StandardDeviation:
     def __init__(self, window_size: int):
-        if not isinstance(window_size, int):
+        if not isinstance(window_size, int) or isinstance(window_size, bool):
             raise TypeError(f"StandardDeviation expected window_size to be an integer, got {type(window_size).__name__}.")
         if window_size <= 0:
             raise ValueError(f"StandardDeviation expected window_size to be positive and non-zero, got {window_size}.")    
@@ -72,7 +72,7 @@ class StandardDeviation:
         - Intraday to Daily (e.g., steps=26 for 15m bars)
         - Daily to Annual (e.g., steps=252 for daily bars)
         """
-        if not isinstance(steps, int):
+        if not isinstance(steps, int) or isinstance(steps, bool):
             raise TypeError(f"StandardDeviation expected steps to be an integer, got {type(steps).__name__}.")
         if steps <= 0:
             raise ValueError(f"StandardDeviation expected steps to be positive and non-zero, got {steps}.")
@@ -89,7 +89,7 @@ class StandardDeviation:
           - Advances the internal window/buffer.
           - Calculates and stores the `.current` property (if the `.readiness` property is `Readiness.OPERATIONAL`).
         """
-        if not isinstance(value, (int, float)):
+        if not isinstance(value, (int, float)) or isinstance(value, bool):
             raise TypeError(f"StandardDeviation expected value to be a number, got {type(value).__name__}.")
 
         self._values.append(value) # Add new value. If full, deque automatically pops the oldest value.

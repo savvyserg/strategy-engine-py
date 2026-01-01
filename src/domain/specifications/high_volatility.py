@@ -15,7 +15,7 @@ class HighVolatilitySpecification:
     - Compares the volatility with the median of the volatility within the window.
     """
     def __init__(self, window_size: int):
-        if not isinstance(window_size, int):
+        if not isinstance(window_size, int) or isinstance(window_size, bool):
             raise TypeError(f"HighVolatilitySpecification expected window_size to be an integer, got {type(window_size).__name__}.")
         if window_size <= 0:
             raise ValueError(f"HighVolatilitySpecification expected window_size to be positive and non-zero, got {window_size}.")
@@ -49,7 +49,7 @@ class HighVolatilitySpecification:
 
         This operation is stateful, it advances the internal windows/buffers.
         """
-        if not isinstance(value, (int, float)):
+        if not isinstance(value, (int, float)) or isinstance(value, bool):
             raise TypeError(f"HighVolatilitySpecification expected value to be a number, got {type(value).__name__}.")
 
         self._log_return.update(value)

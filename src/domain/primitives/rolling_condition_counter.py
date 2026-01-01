@@ -24,7 +24,7 @@ class RollingConditionCounter(Generic[T]):
         :param data_type: The expected type of the input values (e.g., float, int).
                           Required for runtime safety checks.
         """
-        if not isinstance(window_size, int):
+        if not isinstance(window_size, int) or isinstance(window_size, bool):
             raise TypeError(f"RollingConditionCounter expected window_size to be an integer, got {type(window_size).__name__}.")
         if window_size <= 0:
             raise ValueError(f"RollingConditionCounter expected window_size to be positive and non-zero, got {window_size}.")
@@ -79,6 +79,18 @@ class RollingConditionCounter(Generic[T]):
         if not isinstance(value, self._data_type):
             expected = self._data_type.__name__ if isinstance(self._data_type, type) else str(self._data_type)
             raise TypeError(f"RollingConditionCounter expected value of type {expected}, got {type(value).__name__}.")
+
+        # Python treats bool as a subclass of int.
+        # If the user asked for 'int', 'isinstance(True, int)' passes.
+        # We must manually catch and reject this.
+        if isinstance(value, bool):
+            # We only allow bools if the user EXPLICITLY asked for 'bool' in the data_type.
+            # We check if data_type IS bool, or if it's a tuple containing bool.
+            is_bool_allowed = (self._data_type is bool) or (isinstance(self._data_type, tuple) and bool in self._data_type)
+            if not is_bool_allowed:
+                # Safe for both Types and Tuples
+                expected_name = self._data_type.__name__ if isinstance(self._data_type, type) else str(self._data_type)
+                raise TypeError(f"RollingConditionCounter expected value of type {expected_name}, got {type(value).__name__}.")
 
         try:
             is_satisfied = self._condition(value)

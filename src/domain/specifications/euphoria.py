@@ -12,11 +12,11 @@ class EuphoriaSpecification:
     It ingests a stream of prices and internally maintains the historical Z-Score maximum (calculated from LogReturns) within a given window.
     """
     def __init__(self, window_size: int, z_score_euphoria_threshold: float):
-        if not isinstance(window_size, int):
+        if not isinstance(window_size, int) or isinstance(window_size, bool):
             raise TypeError(f"EuphoriaSpecification expected window_size to be an integer, got {type(window_size).__name__}.")
         if window_size <= 0:
             raise ValueError(f"EuphoriaSpecification expected window_size to be positive and non-zero, got {window_size}.")
-        if not isinstance(z_score_euphoria_threshold, (int, float)):
+        if not isinstance(z_score_euphoria_threshold, (int, float)) or isinstance(z_score_euphoria_threshold, bool):
             raise TypeError(f"EuphoriaSpecification expected z_score_euphoria_threshold to be a number, got {type(z_score_euphoria_threshold).__name__}.")
         if z_score_euphoria_threshold <= 0:
             raise ValueError(f"EuphoriaSpecification expected z_score_euphoria_threshold to be positive and non-zero, got {z_score_euphoria_threshold}.")
@@ -60,7 +60,7 @@ class EuphoriaSpecification:
 
         This operation is stateful, it advances the internal windows/buffers.
         """
-        if not isinstance(value, (int, float)):
+        if not isinstance(value, (int, float)) or isinstance(value, bool):
             raise TypeError(f"EuphoriaSpecification expected value to be a number, got {type(value).__name__}.")
 
         self._log_return.update(value)
