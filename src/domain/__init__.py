@@ -1,4 +1,5 @@
 from src.domain.strategies.interface import Strategy
+from src.domain.strategies.random import RandomStrategy
 from src.domain.strategies.mean_reversion import MeanReversionStrategy
 from src.domain.state import Readiness
 from src.domain.state import Position
@@ -12,6 +13,7 @@ __all__ = [
     # Silence linter about unused imports.
     # Limit wildcard imports to the intended components.
     "Strategy",
+    "RandomStrategy",
     "MeanReversionStrategy",
     "Readiness",
     "Position",
