@@ -18,7 +18,9 @@ from src.domain.candle import Candle
 
 from src.domain.config_port import DomainConfigPort
 
-class MeanReversionStrategy:
+from src.domain.strategies.interface import Strategy
+
+class MeanReversionStrategy(Strategy):
     """
     Determine the next action to be performed on a given asset.
 
