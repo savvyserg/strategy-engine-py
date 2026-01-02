@@ -18,7 +18,7 @@ from src.domain.candle import Candle
 
 from src.domain.config_port import DomainConfigPort
 
-class StrategyEngine:
+class MeanReversionStrategy:
     """
     Determine the next action to be performed on a given asset.
 
@@ -33,12 +33,12 @@ class StrategyEngine:
     """
     def __init__(self, config: DomainConfigPort):
         if not isinstance(config, DomainConfigPort):
-            raise TypeError(f"StrategyEngine expected config to implement DomainConfigPort, got a {type(config).__name__} instance that does not implement it.")
+            raise TypeError(f"{type(self).__name__} expected config to implement DomainConfigPort, got a {type(config).__name__} instance that does not implement it.")
         self._config = config
 
         # Metrics
-        # - These are primitives being used directly by the strategy engine to enforce business logic.
-        # - As oposed to primitives used internally in specifications or other dependencies, which are not managed by the strategy engine directly.
+        # - These are primitives being used directly by the strategy to enforce business logic.
+        # - As oposed to primitives used internally in specifications or other dependencies, which are not managed by the strategy directly.
         self._log_return: LogReturn = LogReturn()
         self._standard_deviation: StandardDeviation = StandardDeviation(self._config.window_size)
         self._z_score: ZScore = ZScore(self._config.window_size)
@@ -60,7 +60,7 @@ class StrategyEngine:
         This method MUST be called for every candle close of a fixed timeframe determined by the client.
         """
         if not isinstance(candle, Candle):
-            raise TypeError(f"StrategyEngine expected candle to be of type Candle, got {type(candle).__name__}.")
+            raise TypeError(f"{type(self).__name__} expected candle to be of type Candle, got {type(candle).__name__}.")
         
         price = candle.close
         self._update_metrics(price)
@@ -79,7 +79,7 @@ class StrategyEngine:
         self._euphoria_spec.update(price)
         self._high_volatility_spec.update(price)
         self._positive_trend_spec.update(price)
-    
+
     @property
     def readiness(self):
         """
@@ -109,31 +109,31 @@ class StrategyEngine:
         - Client passes current_price (but internal state only gets updated with the price passed in the candle at `update()`).
         - This allows for intra-candle prices to be tested against the current market conditions in the algorithm.
         - This component also does not own the position nor the entry_price (if applicable), they are only used to output the calculation.
-        
+
         This API allows for the domain to only decide the action and not care about order management:
         - Client always passes if the asset being held and at which price, since it is responsible for actually performing the operation.
         - This reduces state desynchronization.
-        - If StrategyEngine kept track of position and entry price it would need to leak the abstraction and synchronize state too often.
+        - If this component kept track of position and entry price it would need to leak the abstraction and synchronize state too often.
 
         WARNING: this method should only be called if this component's `.readiness` property `Readiness.OPERATIONAL`, otherwise it will throw an error.
         """
         if self.readiness != Readiness.OPERATIONAL:
-            raise RuntimeError(f"StrategyEngine expected evaluate() to only be called when its readiness is OPERATIONAL, but it is {self.readiness}.")
+            raise RuntimeError(f"{type(self).__name__} expected evaluate() to only be called when its readiness is OPERATIONAL, but it is {self.readiness}.")
 
         if not isinstance(current_price, (int, float)) or isinstance(current_price, bool):
-            raise TypeError(f"StrategyEngine expected current_price to be a number, got {type(current_price).__name__}.")
+            raise TypeError(f"{type(self).__name__} expected current_price to be a number, got {type(current_price).__name__}.")
         if current_price <= 0:
-            raise ValueError(f"StrategyEngine expected current_price to be positive and non-zero, got {current_price}")
+            raise ValueError(f"{type(self).__name__} expected current_price to be positive and non-zero, got {current_price}")
         if not isinstance(current_position, Position):
-            raise TypeError(f"StrategyEngine expected current_position to be of type Position, got {type(current_position).__name__}.")
+            raise TypeError(f"{type(self).__name__} expected current_position to be of type Position, got {type(current_position).__name__}.")
 
         if current_position == Position.HOLDING:
             # if asset is held, decide if it should be sold
             if entry_price is None:
                 # entry price has to exist if the asset is held, otherwise the calculation can't be completed
-                raise TypeError(f"StrategyEngine expected evaluate() to only be called with current_position as HOLDING if entry_price exists, but it is None.")
+                raise TypeError(f"{type(self).__name__} expected evaluate() to only be called with current_position as HOLDING if entry_price exists, but it is None.")
             if not isinstance(entry_price, (int, float)) or isinstance(entry_price, bool):
-                raise TypeError(f"StrategyEngine expected entry_price to be a number, got {type(entry_price).__name__}.")
+                raise TypeError(f"{type(self).__name__} expected entry_price to be a number, got {type(entry_price).__name__}.")
 
             # check take profit conditions
             take_profit_price = entry_price * (1 + (self._config.take_profit_price_constant_k * self._standard_deviation.current))
