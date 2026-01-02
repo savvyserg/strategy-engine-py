@@ -40,8 +40,8 @@ class ConfigAdapter(DomainConfigPort):
         #### hard z-score limit
         "_stop_z_score", # minimum value that Z-Score should have to satisfy stop condition (Z-Score < stop_z_score satisfies stop)
         #### recent low z-scores count
-        "_stop_low_z_score_count", # minimum number of low Z-Score values in the latest n that satisfy stop condition (count >= stop_low_z_score_count satisfies stop)
         "_stop_low_z_score_n", # number of latest Z-Scores to be considered for stop_low_z_score_count
+        "_stop_low_z_score_count", # minimum number of low Z-Score values in the latest n that satisfy stop condition (count >= stop_low_z_score_count satisfies stop)
         "_stop_low_z_score_value", # minimum Z-Score value to NOT be considered low for stop_low_z_score_count (value < stop_low_z_score_value is considered low)
     )
 
@@ -114,17 +114,17 @@ class ConfigAdapter(DomainConfigPort):
                 self._validate_num_float(stop_z_score, "stop_z_score")
                 self._stop_z_score = stop_z_score
 
-                stop_low_z_score_count = file_config["stop_low_z_score_count"]
-                self._validate_some(stop_low_z_score_count, "stop_low_z_score_count")
-                self._validate_num_int(stop_low_z_score_count, "stop_low_z_score_count")
-                self._validate_num_positive_non_zero(stop_low_z_score_count, "stop_low_z_score_count")
-                self._stop_low_z_score_count = stop_low_z_score_count
-
                 stop_low_z_score_n = file_config["stop_low_z_score_n"]
                 self._validate_some(stop_low_z_score_n, "stop_low_z_score_n")
                 self._validate_num_int(stop_low_z_score_n, "stop_low_z_score_n")
                 self._validate_num_positive_non_zero(stop_low_z_score_n, "stop_low_z_score_n")
                 self._stop_low_z_score_n = stop_low_z_score_n
+
+                stop_low_z_score_count = file_config["stop_low_z_score_count"]
+                self._validate_some(stop_low_z_score_count, "stop_low_z_score_count")
+                self._validate_num_int(stop_low_z_score_count, "stop_low_z_score_count")
+                self._validate_num_positive_non_zero(stop_low_z_score_count, "stop_low_z_score_count")
+                self._stop_low_z_score_count = stop_low_z_score_count
 
                 stop_low_z_score_value = file_config["stop_low_z_score_value"]
                 self._validate_some(stop_low_z_score_value, "stop_low_z_score_value")
@@ -162,14 +162,14 @@ class ConfigAdapter(DomainConfigPort):
     @property
     def stop_z_score(self) -> float:
         return self._stop_z_score
-    
-    @property
-    def stop_low_z_score_count(self) -> int:
-        return self._stop_low_z_score_count
-    
+
     @property
     def stop_low_z_score_n(self) -> int:
         return self._stop_low_z_score_n
+
+    @property
+    def stop_low_z_score_count(self) -> int:
+        return self._stop_low_z_score_count
     
     @property
     def stop_low_z_score_value(self) -> float:
