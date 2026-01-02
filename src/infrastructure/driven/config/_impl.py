@@ -17,16 +17,32 @@ class ConfigAdapter(DomainConfigPort):
 
     # Make config properties the only properties assignable to this object.
     __slots__ = (
+        # trading strategy
+        ## general settings
+        ### calculation window
+        #### window size
         "_window_size", # number of candles considered for all stats (moving averages, standard deviations, random walk projections, etc)
-        "_discount_z_score_threshold", # minimum value for Z-Score in which the market is NOT considered discounted (value < DISCOUNT_Z_SCORE_TRESHOLD is discounted)
-        "_euphoria_z_score_threshold", # maximum value for Z-Score in which the market is NOT considered euphoric (value > EUPHORIA_Z_SCORE_THRESHOLD is euphoric)
-        "_positive_trend_ma_threshold", # minimum value for MA in which the rend is NOT considered positive (value > POSITIVE_TREND_MA_THRESHOLD is a positive trend)
-        "_take_profit_price_constant_k", # take_profit_price = entry_price * (1 + (TAKE_PROFIT_PRICE_CONSTANT_K * standard_deviation))
-        "_stop_price_constant_k", # stop_price = entry_price * (1 - (STOP_PRICE_CONSTANT_K * standard_deviation))
-        "_stop_z_score", # minimum value that Z-Score should have to satisfy stop condition (Z-Score < STOP_Z_SCORE satisfies stop)
-        "_stop_low_z_score_count", # minimum number of low Z-Score values in the latest n that satisfy stop condition (count >= STOP_LOW_Z_SCORE_COUNT satisfies stop)
-        "_stop_low_z_score_n", # number of latest Z-Scores to be considered for STOP_LOW_Z_SCORE_COUNT
-        "_stop_low_z_score_value", # minimum Z-Score value to NOT be considered low for STOP_LOW_Z_SCORE_COUNT (value < STOP_LOW_Z_SCORE_VALUE is considered low)
+        ## enter logic
+        ### market specification thresholds
+        #### discount threshold
+        "_discount_z_score_threshold", # minimum value for Z-Score in which the market is NOT considered discounted (value < discount_z_score_threshold is discounted)
+        #### euphoria threshold
+        "_euphoria_z_score_threshold", # maximum value for Z-Score in which the market is NOT considered euphoric (value > euphoria_z_score_threshold is euphoric)
+        #### positive trend threshold
+        "_positive_trend_ma_threshold", # minimum value for MA in which the rend is NOT considered positive (value > positive_trend_ma_threshold is a positive trend)
+        ## exit logic
+        ### take profit
+        #### constant k
+        "_take_profit_price_constant_k", # take_profit_price = entry_price * (1 + (take_profit_price_constant_k * standard_deviation))
+        ### stop loss
+        #### constant k
+        "_stop_price_constant_k", # stop_price = entry_price * (1 - (stop_price_constant_k * standard_deviation))
+        #### hard z-score limit
+        "_stop_z_score", # minimum value that Z-Score should have to satisfy stop condition (Z-Score < stop_z_score satisfies stop)
+        #### recent low z-scores count
+        "_stop_low_z_score_count", # minimum number of low Z-Score values in the latest n that satisfy stop condition (count >= stop_low_z_score_count satisfies stop)
+        "_stop_low_z_score_n", # number of latest Z-Scores to be considered for stop_low_z_score_count
+        "_stop_low_z_score_value", # minimum Z-Score value to NOT be considered low for stop_low_z_score_count (value < stop_low_z_score_value is considered low)
     )
 
     def __init__(self):
