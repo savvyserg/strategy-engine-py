@@ -1,0 +1,68 @@
+# ==============================================================================
+# ==============================================================================
+#  TRADING STRATEGY CONFIGURATION
+# ==============================================================================
+# ==============================================================================
+
+# ==============================================================================
+#  1. GENERAL SETTINGS
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+#  A. Calculation Window
+# ------------------------------------------------------------------------------
+# [ Window Size ]
+# Number of candles considered for all stats (moving averages, std dev, etc)
+window_size = 26
+
+# ==============================================================================
+#  2. ENTER LOGIC
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+#  A. Market Specification Thresholds
+# ------------------------------------------------------------------------------
+# [ Discount Threshold ]
+# Minimum Z-Score in which the market is NOT considered "Discounted" (Oversold): value < discount_z_score_threshold is discounted
+discount_z_score_threshold = -1.0
+
+# [ Euphoria Threshold ]
+# Maximum Z-Score in which the market is NOT considered "Euphoric" (Overbought): value > euphoria_z_score_threshold is euphoric
+euphoria_z_score_threshold = 3.0
+
+# [ Positive Trend Threshold ]
+# Minimum Moving Average in which the trend is NOT considered positive "Positive": value > positive_trend_ma_threshold is a positive trend
+positive_trend_ma_threshold = 0.0
+
+# ==============================================================================
+#  3. EXIT LOGIC
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+#  A. Take Profit (Profit Target)
+# ------------------------------------------------------------------------------
+# [ Constant K ]
+# Multiplier for Standard Deviation to set Take Profit Price: take_profit_price = entry_price * (1 + (take_profit_price_constant_k * standard_deviation))
+# Take Profit Price satisfied if: current_price >= take_profit_price
+take_profit_price_constant_k = 1.5
+
+# ------------------------------------------------------------------------------
+#  B. Stop Loss (Risk Management)
+# ------------------------------------------------------------------------------
+# [ Constant K ]
+# Multiplier for Standard Deviation to set Stop Loss Price: stop_price = entry_price * (1 - (STOP_PRICE_CONSTANT_K * standard_deviation))
+# Stop Price satisfied if: current_price < stop_price
+stop_price_constant_k = 1.0
+
+# [ Hard Z-Score Limit ]
+# Minimum Z-Score to satisfy stop condition: Z-Score < stop_z_score satisfies stop
+stop_z_score = -2.0
+
+# [ Recent Low Z-Scores Count ]
+# If 'count' candles within the last 'n' candles have Z-Score < 'value'
+# The lookback window (n)
+stop_low_z_score_n = 5
+# The count threshold (how many low candles needed)
+stop_low_z_score_count = 3
+# The value threshold (what is considered "low")
+stop_low_z_score_value = -2.0
