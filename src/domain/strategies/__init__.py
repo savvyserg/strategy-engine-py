@@ -22,3 +22,16 @@ Exported Strategies:
 * **MeanReversionStrategy:** A technical analysis strategy based on Z-Scores, identifying overextended markets and trading the mean reversion.
 * **RandomStrategy:** A benchmarking tool that outputs random legal actions to validate system stability or the Efficient Market Hypothesis.
 """
+
+from src.domain.strategies.interface import Strategy
+from src.domain.strategies.random import RandomStrategy
+from src.domain.strategies.mean_reversion import MeanReversionStrategy
+
+__all__ = [
+    # Explicitely define module API.
+    # Silence linter about unused imports.
+    # Limit wildcard imports to the intended components.
+    "Strategy",
+    "RandomStrategy",
+    "MeanReversionStrategy",
+]
