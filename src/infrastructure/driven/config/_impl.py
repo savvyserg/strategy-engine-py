@@ -4,6 +4,8 @@ import tomllib
 
 from src.domain import DomainConfigPort
 
+from src.infrastructure.common.path import resolve_file_path_at_base
+
 CONFIG_FILE_NAME = "config.toml"
 
 class ConfigAdapter(DomainConfigPort):
@@ -46,33 +48,9 @@ class ConfigAdapter(DomainConfigPort):
     )
 
     def __init__(self):
-        application_path: str = ""
-        if getattr(sys, "frozen", False):
-            # CASE A: Frozen Executable (Production)
-            # The user runs the packaged executable file.
-            # We assume the user places config.toml next to the packaged executable.
-            application_path = os.path.dirname(sys.executable)
-        else:
-            # CASE B: Python Script (Development)
-            # The user runs 'python src/main.py'.
-            # We locate the entry point script (__main__) to find 'src/'.
-            # We then go ONE level up to find the Project Root
-            import __main__
-            if hasattr(__main__, "__file__"):
-                # We are running a script (e.g. 'python src/main.py').
-                # 1. Get the folder containing the entry script: '.../src'
-                entry_dir = os.path.dirname(os.path.abspath(__main__.__file__))
-                # 2. Go up one level to find Project Root: '.../Project'
-                #    (Assuming main.py is strictly inside 'src/')
-                application_path = os.path.dirname(entry_dir)
-
-        if len(application_path) == 0:
-            raise RuntimeError("ConfigAdapter failed to find the application path. Something is terribly wrong. Are you executing the app correctly? Please run via main.py.")
-
-        config_path = os.path.join(application_path, CONFIG_FILE_NAME)
-
+        config_path = resolve_file_path_at_base(CONFIG_FILE_NAME)
         if not os.path.exists(config_path):
-            raise FileNotFoundError(f"Configuration file not found at: {config_path}.")
+            raise FileNotFoundError(f"Configuration file not found at: '{config_path}'.")
 
         with open(config_path, "rb") as f:
             file_config = tomllib.load(f)
