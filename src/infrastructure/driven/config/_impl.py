@@ -20,6 +20,7 @@ class ConfigAdapter(DomainConfigPort):
     # Make config properties the only properties assignable to this object.
     __slots__ = (
         # trading strategy
+        "_random_strategy", # strategy master switch: if True, overrides every other trading strategy setting and uses RandomStrategy
         ## general settings
         ### calculation window
         #### window size
@@ -56,6 +57,10 @@ class ConfigAdapter(DomainConfigPort):
             file_config = tomllib.load(f)
 
             try:
+                random_strategy = file_config.get("random_strategy")
+                self._validate_bool(random_strategy, "random_strategy")
+                self._random_strategy = random_strategy
+
                 window_size = file_config["window_size"]
                 self._validate_some(window_size, "window_size")
                 self._validate_num_int(window_size, "window_size")
@@ -114,6 +119,10 @@ class ConfigAdapter(DomainConfigPort):
                 raise Exception(f"Failed to load configuration from {CONFIG_FILE_NAME}: {e}") from e
 
     @property
+    def random_strategy(self) -> bool:
+        return self._random_strategy
+
+    @property
     def window_size(self) -> int:
         return self._window_size
     
@@ -157,6 +166,11 @@ class ConfigAdapter(DomainConfigPort):
     def _validate_some(value, name: str):
         if value is None:
             raise ValueError(f"Config is missing expected variable {name}.")            
+
+    @staticmethod
+    def _validate_bool(value: bool, name: str):
+        if not isinstance(value, bool):
+            raise ValueError(f"Config expected {name} to be a boolean, got {type(value).__name__}.")
 
     @staticmethod
     def _validate_num_int(value: int, name: str):

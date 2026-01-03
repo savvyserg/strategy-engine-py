@@ -4,6 +4,11 @@
 # ==============================================================================
 # ==============================================================================
 
+# [ Random Strategy Mode ]
+# If set to true, ignores all other strategy settings and runs a pure random strategy.
+# Useful for establishing a baseline for comparison.
+random_strategy = false
+
 # ==============================================================================
 #  1. GENERAL SETTINGS
 # ==============================================================================
