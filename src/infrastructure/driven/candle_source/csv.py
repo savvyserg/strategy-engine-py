@@ -1,5 +1,6 @@
 import csv
 import os
+from datetime import datetime
 from typing import Iterator
 
 from src.domain.candle import Candle
@@ -40,7 +41,7 @@ class CSVCandleSourceAdapter(CandleSourcePort):
 
                 for row in reader:
                     yield Candle(
-                        timestamp=int(row['timestamp']),
+                        timestamp=datetime.fromisoformat(row['timestamp']),
                         open=float(row['open']),
                         high=float(row['high']),
                         low=float(row['low']),
