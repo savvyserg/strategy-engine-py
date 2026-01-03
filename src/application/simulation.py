@@ -55,7 +55,7 @@ class SimulatedTradingEngine:
 
             current_action_if_ready: Optional[Action] = None
             if self._strategy.readiness == Readiness.OPERATIONAL:
-                current_action_if_ready = self._strategy.evaluate(candle, self._position)
+                current_action_if_ready = self._strategy.evaluate(candle.close, self._position)
 
                 # Simulate trading.
                 close_price = candle.close
