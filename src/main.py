@@ -6,38 +6,40 @@ from src.domain.strategies.random import RandomStrategy
 from src.domain.strategies.mean_reversion import MeanReversionStrategy
 from src.application.simulation import SimulatedTradingEngine
 
-def main():
-    print("--- Starting Simulation ---")
+from src.infrastructure.driven.logger import logger
 
-    print(f"[Init] Configuration loaded.")
+def main():
+    logger.info("--- Starting Simulation ---")
+
+    logger.info(f"[Init] Configuration loaded.")
 
     candle_source = CSVCandleSourceAdapter(file_name="input.csv")
-    print("[Init] CSV Candle Source ready.")
+    logger.info("[Init] CSV Candle Source ready.")
 
     journal = CSVJournalAdapter(file_name="output.csv")
-    print("[Init] CSV Journal ready.")
+    logger.info("[Init] CSV Journal ready.")
 
     if CONFIG_ADAPTER.random_strategy:
         strategy = RandomStrategy(config=CONFIG_ADAPTER)
-        print(f"[Init] 'RANDOM_STRATEGY' is True. Overriding with '{type(strategy).__name__}'.")
+        logger.info(f"[Init] 'RANDOM_STRATEGY' is True. Overriding with '{type(strategy).__name__}'.")
     else:
         strategy = MeanReversionStrategy(config=CONFIG_ADAPTER)
-        print(f"[Init] Strategy '{type(strategy).__name__}' initialized.")
+        logger.info(f"[Init] Strategy '{type(strategy).__name__}' initialized.")
 
     engine = SimulatedTradingEngine(
         strategy=strategy,
         source=candle_source,
         journal=journal
     )
-    print("[Init] Simulated Trading Engine assembled.")
+    logger.info("[Init] Simulated Trading Engine assembled.")
 
-    print("--- Execution Started ---")
+    logger.info("--- Execution Started ---")
     try:
         engine.run()
-        print("--- Execution Finished Successfully ---")
-        print("Results written to 'output.csv'.")
+        logger.info("--- Execution Finished Successfully ---")
+        logger.info("Results written to 'output.csv'.")
     except Exception as e:
-        print(f"\n[Error] Execution crashed: '{e}'.")
+        logger.error(f"\n[Error] Execution crashed: {e}.")
         raise e
 
 if __name__ == "__main__":
