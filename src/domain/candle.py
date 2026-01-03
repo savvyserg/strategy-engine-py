@@ -1,5 +1,4 @@
-# TODO: check if we'll have timestamp.
-# from datetime import datetime
+from datetime import datetime
 
 class Candle:
     """
@@ -10,8 +9,7 @@ class Candle:
         "_high", # The highest price reached during the interval.
         "_low", # The lowest price reached during the interval.
         "_close", # The price at the end of the interval.
-        # TODO: check if we'll have timestamp.
-        # "_timestamp", # The start time of the candle.
+        "_timestamp", # The date and time of the candle.
     )
 
     def __setattr__(self, name, value):
@@ -19,12 +17,10 @@ class Candle:
             raise AttributeError("Candle is immutable.")
         object.__setattr__(self, name, value)
 
-    def __init__(self, open: float, high: float, low: float, close: float):
-        # TODO: check if we'll have timestamp.
-        # if not isinstance(timestamp, datetime):
-        #     raise TypeError(f"Candle expected timestamp to be datetime, got {type(timestamp).__name__}.")
-        
+    def __init__(self, open: float, high: float, low: float, close: float, timestamp: datetime):
         # type check
+        if not isinstance(timestamp, datetime):
+            raise TypeError(f"Candle expected timestamp to be datetime, got {type(timestamp).__name__}.")
         if not isinstance(open, (int, float)) or isinstance(open, bool):
             raise TypeError(f"Candle expected open to be a number, got {type(open).__name__}.")
         if not isinstance(high, (int, float)) or isinstance(high, bool):
@@ -46,14 +42,13 @@ class Candle:
         self._high = high
         self._low = low
         self._close = close
-        # TODO: check if we'll have timestamp.
-        # self._timestamp = timestamp
+        self._timestamp = timestamp
 
     def __str__(self):
         """
         Return a string representation for debugging.
         """
-        return f"Candle(O:{self._open}, H:{self._high}, L:{self._low}, C:{self._close})"
+        return f"Candle(O:{self._open}, H:{self._high}, L:{self._low}, C:{self._close}, T:{self._timestamp})"
 
     def __repr__(self):
         return self.__str__()
@@ -74,10 +69,9 @@ class Candle:
     def close(self) -> float:
         return self._close
 
-    # TODO: check if we'll have timestamp.
-    # @property
-    # def timestamp(self) -> datetime:
-    #     return self._timestamp
+    @property
+    def timestamp(self) -> datetime:
+        return self._timestamp
 
     @property
     def range(self) -> float:
