@@ -23,9 +23,9 @@ Exported Strategies:
 * **RandomStrategy:** A benchmarking tool that outputs random legal actions to validate system stability or the Efficient Market Hypothesis.
 """
 
-from src.domain.strategies.interface import Strategy
-from src.domain.strategies.random import RandomStrategy
-from src.domain.strategies.mean_reversion import MeanReversionStrategy
+from .interface import Strategy
+from .random import RandomStrategy
+from .mean_reversion import MeanReversionStrategy
 
 __all__ = [
     # Explicitely define module API.
