@@ -37,6 +37,7 @@ class SimulatedTradingEngine:
         self._cash: float = 100000.0  # Hardcoded start at $100k.
         self._held_quantity: int = 0
         self._position: Position = Position.ZEROED
+        self._entry_price: Optional[float] = None
         self._last_timestamp: Optional[int] = None
 
     def run(self) -> None:
@@ -55,7 +56,11 @@ class SimulatedTradingEngine:
 
             current_action_if_ready: Optional[Action] = None
             if self._strategy.readiness == Readiness.OPERATIONAL:
-                current_action_if_ready = self._strategy.evaluate(candle.close, self._position)
+                current_action_if_ready = self._strategy.evaluate(
+                    candle.close,
+                    self._position,
+                    entry_price=self._entry_price,
+                )
 
                 # Simulate trading.
                 close_price = candle.close
@@ -90,6 +95,7 @@ class SimulatedTradingEngine:
             self._cash -= cost
             self._held_quantity = quantity_to_buy
             self._position = Position.HOLDING
+            self._entry_price = price
         else:
             # Corner case: Not enough cash to buy even 1 unit.
             # We treat this as a "failed fill" effectively doing nothing but staying Neutral.
@@ -106,3 +112,4 @@ class SimulatedTradingEngine:
         self._cash += revenue
         self._held_quantity = 0
         self._position = Position.ZEROED
+        self._entry_price = None
