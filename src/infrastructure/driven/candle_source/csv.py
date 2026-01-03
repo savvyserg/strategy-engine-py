@@ -33,7 +33,7 @@ class CSVCandleSourceAdapter(CandleSourcePort):
                 reader = csv.DictReader(f)
                 
                 # Validate CSV has required columns.
-                required = {'timestamp', 'open', 'high', 'low', 'close', 'volume'}
+                required = {'timestamp', 'open', 'high', 'low', 'close'}
                 if not reader.fieldnames or not required.issubset(set(reader.fieldnames)):
                     missing = required - set(reader.fieldnames or [])
                     raise ValueError(f"CSV missing required columns: {missing}")
@@ -45,7 +45,6 @@ class CSVCandleSourceAdapter(CandleSourcePort):
                         high=float(row['high']),
                         low=float(row['low']),
                         close=float(row['close']),
-                        volume=float(row['volume'])
                     )
         except FileNotFoundError:
             raise FileNotFoundError(f"{type(self).__name__} Error: candle source file not found '{self._file_path}'.")
