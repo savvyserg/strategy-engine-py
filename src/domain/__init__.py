@@ -1,4 +1,4 @@
-from src.domain.strategies.interface import Strategy
+from src.domain.strategies.interface import StrategyInterface
 from src.domain.strategies.random import RandomStrategy
 from src.domain.strategies.mean_reversion import MeanReversionStrategy
 from src.domain.state import Readiness
@@ -12,7 +12,7 @@ __all__ = [
     # Explicitely define module API.
     # Silence linter about unused imports.
     # Limit wildcard imports to the intended components.
-    "Strategy",
+    "StrategyInterface",
     "RandomStrategy",
     "MeanReversionStrategy",
     "Readiness",

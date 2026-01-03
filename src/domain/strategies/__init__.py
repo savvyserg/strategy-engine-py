@@ -18,12 +18,12 @@ WARNING: They require the client to be aware of their `readiness`, and will thro
 
 Exported Strategies:
 --------------------
-* **Strategy:** The interface (Protocol) that all strategies must implement.
+* **StrategyInterface:** The interface (Protocol) that all strategies must implement.
 * **MeanReversionStrategy:** A technical analysis strategy based on Z-Scores, identifying overextended markets and trading the mean reversion.
 * **RandomStrategy:** A benchmarking tool that outputs random legal actions to validate system stability or the Efficient Market Hypothesis.
 """
 
-from .interface import Strategy
+from .interface import StrategyInterface
 from .random import RandomStrategy
 from .mean_reversion import MeanReversionStrategy
 
@@ -31,7 +31,7 @@ __all__ = [
     # Explicitely define module API.
     # Silence linter about unused imports.
     # Limit wildcard imports to the intended components.
-    "Strategy",
+    "StrategyInterface",
     "RandomStrategy",
     "MeanReversionStrategy",
 ]

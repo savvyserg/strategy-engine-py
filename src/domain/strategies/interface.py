@@ -3,14 +3,13 @@ from src.domain.candle import Candle
 from src.domain.state import Position, Action, Readiness
 
 @runtime_checkable
-class Strategy(Protocol):
+class StrategyInterface(Protocol):
     """
     Interface for any trading strategy (e.g. MeanReversion, Random, ML).
 
     Mutation & Evaluation
     ---------------------
-    All strategies implement the `Strategy` interface, which enforces a strict
-    Command-Query Separation (CQS) to prevent side effects during evaluation:
+    This interface enforces a strict Command-Query Separation (CQS) to prevent side effects during evaluation:
 
     1. **Mutation (`update`)**:
       - Accepts a `Candle`.
