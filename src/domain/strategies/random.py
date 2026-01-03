@@ -1,11 +1,12 @@
 from typing import Optional
 import random
 
-from src.domain.strategies.interface import Strategy
 from src.domain.candle import Candle
 from src.domain.state import Position, Action, Readiness
 
-class RandomStrategy(Strategy):
+from src.domain.strategies.interface import StrategyInterface
+
+class RandomStrategy(StrategyInterface):
     """
     A strategy implementation that outputs random legal actions.
     Used for benchmarking (Efficient Market Hypothesis) or system testing.
