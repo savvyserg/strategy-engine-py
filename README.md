@@ -9,7 +9,7 @@ A Python-based trading simulation engine that tests strategies against historica
 Execute the script from the **root directory** of the project:
 
 ```bash
-python -m src.main
+python -m app.main
 ```
 
 ## Backtesting
