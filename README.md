@@ -56,7 +56,8 @@ Run the automated build script from the project root:
 
 ### Configuration
 
-The application requires a **`config.toml`** file in the root directory.
+The application requires a **`config.toml`** file.
+
 * This file defines strategy parameters (e.g., window sizes, thresholds).
 * **Reference:** Please check **`config.example.toml`** for all available variables, descriptions, and value examples.
 * **Requirement:** The application will fail to start if this file is missing or invalid.
@@ -80,3 +81,13 @@ To perform a backtest, a file named **`input.csv`** must exist in the root direc
 | **`low`** | `Number` | Float or Integer. Must be positive (`> 0`). |
 | **`close`** | `Number` | Float or Integer. Must be positive (`> 0`). |
 
+## User-Provided File Location:
+The application detects required files (e.g., `config.toml`, `input.csv`) based on your execution mode.
+
+1. **Running Packaged Executable:**
+   The application looks in the **Current Working Directory**.
+   * **GUI (Double-Click):** Works automatically (files must be next to the binary).
+   * **Terminal:** You must run the command *from the directory containing the files*.
+
+2. **Running Script Directly:**
+   The application looks in the **Project Root** (main source folder).
