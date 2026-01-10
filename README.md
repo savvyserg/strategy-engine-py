@@ -20,8 +20,9 @@ This project can be compiled into a standalone binary using **PyApp**.
 
 1. **Rust & Cargo:** [Install Rust](https://www.rust-lang.org/tools/install)
 2. **PyApp Source:** Must exist in a sibling directory.
+   *We pin version `v0.29.0` to ensure build stability.*
   ```bash
-  git clone [https://github.com/hatch-sh/pyapp](https://github.com/hatch-sh/pyapp) ../pyapp-latest
+  git clone --branch v0.29.0 https://github.com/ofek/pyapp ../pyapp-latest
   ```
 3. **Python Build Dependencies** Install the project and build tools (required for `build-binary.sh`):
   ```bash
