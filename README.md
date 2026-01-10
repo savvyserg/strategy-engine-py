@@ -12,6 +12,46 @@ Execute the script from the **root directory** of the project:
 python -m app.main
 ```
 
+## Building for Production (Single-File Binary)
+
+This project can be compiled into a standalone binary using **PyApp**.
+
+### Prerequisites
+
+1. **Rust & Cargo:** [Install Rust](https://www.rust-lang.org/tools/install)
+2. **PyApp Source:** Must exist in a sibling directory.
+   ```bash
+   git clone [https://github.com/hatch-sh/pyapp](https://github.com/hatch-sh/pyapp) ../pyapp-latest
+
+### Cross-Compilation Tools (Optional)
+
+To build **Windows** and **Mac** binaries from a **Linux** machine, you need **Zig** and **Cargo Zigbuild**. Without these, the build script will fail on non-native targets due to missing system linkers.
+
+1.  **Install Zig Compiler:**
+    * **Ubuntu/Debian (Snap):**
+        ```bash
+        sudo snap install zig --classic --beta
+        ```
+    * **Manual Download:** Get the release from [ziglang.org/download](https://ziglang.org/download/) and add it to your `PATH`.
+
+2.  **Install Cargo Extension:**
+    ```bash
+    cargo install cargo-zigbuild
+    ```
+
+*If you do not wish to install these tools, please open `build-binary.sh` and comment out the targets you do not need (e.g., Mac/Windows).*
+
+### Build Instructions
+
+Run the automated build script from the project root:
+
+```bash
+./build-binary.sh
+```
+
+* **Artifacts:** Binaries are placed in the project root (e.g., `quant-trader_linux_x86-64`).
+* **Cross-Compilation:** Building for Windows/Mac from Linux requires specific linkers (see `build-binary.sh` notes).
+
 ## Backtesting
 
 ### Configuration
