@@ -12,19 +12,33 @@ def get_base_path() -> str:
     2. If not, we are in Development (running python main.py).
        We find the project root by looking at where main.py is.
     """
-    # 1. Are we running as a packaged binary? (PyApp / PyInstaller).
-    # PyApp sets sys.executable to the path of the binary itself.
-    # Standard Python sets sys.executable to the python interpreter (e.g., /usr/bin/python).
-    executable_path = sys.executable
-    executable_name = os.path.basename(executable_path)
-    # If the executable is NOT standard python, it's likely a PyApp binary.
-    is_standard_python = "python" in executable_name.lower()
-    if not is_standard_python or getattr(sys, "frozen", False):
-        # CASE: Production (Packaged).
-        # We return the folder where the binary sits.
+    # 1.A PyApp Check (Ideally):
+    # PyApp SHOULD set this environment variable to the absolute path of the binary.
+    # This is the only reliable way to know where the user actually ran the file from.
+    pyapp_binary = os.environ.get("PYAPP_EXEC_PATH")
+    if pyapp_binary:
+        return os.path.dirname(os.path.abspath(pyapp_binary))
+
+    # 1.B PyApp Context Check (Fallback):
+    # If the "PYAPP_EXEC_PATH" Env Var is missing, we check if we are running inside the extracted cache.
+    # PyApp extracts code to directories containing "pyapp" or "site-packages".
+    current_file = os.path.abspath(__file__)
+    if "site-packages" in current_file or "pyapp" in current_file:
+        # We are definitely inside the cached/unzipped environment.
+        # When executed, the pyapp binary unpacks a full Python environment and the application code into a local cache directory.
+        # - e.g., `~/.local/share/pyapp/...` on Linux or `%LOCALAPPDATA%\pyapp` on Windows.
+        # - The application runs *from this cache directory*, not from the location of the binary.
+        # Since we don't know the binary path, we rely on the Current Working Directory (CWD).
+        # Since PYAPP_EXEC_PATH failed, we default to the Current Working Directory.
+        # On Windows/Linux/Mac, running a binary (CLI or GUI) usually sets CWD to the binary's folder.
+        return os.getcwd()
+
+    # 2. PyInstaller Check:
+    if getattr(sys, "frozen", False):
+        executable_path = sys.executable
         return os.path.dirname(executable_path)
 
-    # 2. CASE: Development (Script).
+    # 3. Development Check (Standard python script):
     # We are running 'python app/main.py' (or similar).
     import __main__
     if hasattr(__main__, "__file__"):
