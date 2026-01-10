@@ -1,0 +1,23 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "quant-trader"
+version = "0.1.0"
+dependencies = [
+  # Add your requirements here
+]
+
+[project.optional-dependencies]
+dev = [
+  "build",  # Required to run `python -m build`
+]
+
+[project.scripts]
+# This tells python that "python -m app.main" is the entry
+quant-trader = "app.main:main"
+
+# VITAL: This maps your folder structure correctly
+[tool.hatch.build.targets.wheel]
+packages = ["app"]
