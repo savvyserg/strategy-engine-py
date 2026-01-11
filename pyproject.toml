@@ -5,6 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "quant-trader"
 version = "0.1.0"
+requires-python = ">=3.13"
 dependencies = [
   # Add your requirements here
 ]
