@@ -21,7 +21,8 @@ Exported Primitives:
 * **RollingMax:** Tracks statistical extremes.
 * **RollingMedian:** Tracks statistical centers.
 * **MovingAverage:** Tracks the underlying trend of a value.
-* **StandardDeviation:** Tracks the volatility (dispersion) of a value.
+* **Variance** Tracks dispersion in squared units, magnifying the impact of outliers.
+* **StandardDeviation:** Tracks the dispersion of in the original units (Volatility).
 * **ZScore:** Normalizes a value against its historical mean and volatility.
 * **RollingConditionCounter:** Counts frequency of boolean events (logic filters).
 """
@@ -30,6 +31,7 @@ from .log_return import LogReturn
 from .rolling_max import RollingMax
 from .rolling_median import RollingMedian
 from .moving_average import MovingAverage
+from .variance import Variance
 from .standard_deviation import StandardDeviation
 from .z_score import ZScore
 from .rolling_condition_counter import RollingConditionCounter
@@ -42,6 +44,7 @@ __all__ = [
     "RollingMax",
     "RollingMedian",
     "MovingAverage",
+    "Variance",
     "StandardDeviation",
     "ZScore",
     "RollingConditionCounter",

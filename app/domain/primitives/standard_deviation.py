@@ -4,7 +4,7 @@ from typing import Optional
 
 from app.domain.state.readiness import Readiness
 
-from app.domain.primitives.moving_average import MovingAverage
+from app.domain.primitives.variance import Variance
 
 class StandardDeviation:
     def __init__(self, window_size: int):
@@ -12,14 +12,9 @@ class StandardDeviation:
             raise TypeError(f"StandardDeviation expected window_size to be an integer, got {type(window_size).__name__}.")
         if window_size <= 0:
             raise ValueError(f"StandardDeviation expected window_size to be positive and non-zero, got {window_size}.")    
-        if window_size < 2:
-            # this is the sample standard deviation, not the population standard deviation, which means it has Bessel's Correction.
-            # Bessel's Correction is 1/(n-1), so we need at least 2 data points to divide by (n-1).
-            raise ValueError(f"StandardDeviation expected window_size >= 2, got {window_size}.")
 
         self._window_size: int = window_size
-        self._values: deque = deque(maxlen=window_size)
-        self._moving_average = MovingAverage(window_size)
+        self._variance: Variance = Variance(window_size)
         self._current: Optional[float] = None  # Latest stored calculated deviation (only available if readiness is OPERATIONAL).
 
     @property
@@ -29,7 +24,7 @@ class StandardDeviation:
         If the buffer is full, we are operational. If not, we are warming up.
         Single source of truth, no risk of state duplication or redundancy.
         """
-        if (len(self._values) == self._window_size) and (self._moving_average.readiness == Readiness.OPERATIONAL):
+        if (self._variance.readiness == Readiness.OPERATIONAL):
             return Readiness.OPERATIONAL
         return Readiness.WARMING_UP
 
@@ -92,22 +87,12 @@ class StandardDeviation:
         if not isinstance(value, (int, float)) or isinstance(value, bool):
             raise TypeError(f"StandardDeviation expected value to be a number, got {type(value).__name__}.")
 
-        self._values.append(value) # Add new value. If full, deque automatically pops the oldest value.
-
-        # MA
-        self._moving_average.update(value)
-        mean = self._moving_average.current
+        self._variance.update(value)
 
         if self.readiness != Readiness.OPERATIONAL:
             return
 
         # NOTE: if readiness is OPERATIONAL, "mean" is guaranteed to be a float (instead of None).
 
-        # Sum of Squared Differences: sum((r - MA)^2)
-        sum_of_squared_diffs = sum((x - mean) ** 2 for x in self._values)
-
-        # Variance: (1 / (n - 1)) * sum_of_squared_diffs
-        variance = sum_of_squared_diffs / (self._window_size - 1)
-
         # Standard Deviation: sqrt(Variance)
-        self._current = math.sqrt(variance)
+        self._current = math.sqrt(self._variance.current)
