@@ -31,8 +31,12 @@ class RandomStrategy(StrategyInterface):
         if current_position == Position.ZEROED:
             # if Neutral -> 50% Buy / 50% Neutral
             return random.choice((Action.BUY, Action.NEUTRAL))
-    
+
     @property
     def readiness(self) -> Readiness:
         # Stateless random strategy is always ready.
         return Readiness.OPERATIONAL
+
+    def inspect(self) -> dict:
+        # We have no internal structures for observability.
+        return {}

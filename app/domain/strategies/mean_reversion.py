@@ -103,6 +103,33 @@ class MeanReversionStrategy(StrategyInterface):
             return Readiness.OPERATIONAL
         return Readiness.WARMING_UP
 
+    def inspect(self) -> dict:
+        """
+        Return the values of the internal structures of the strategy in a dictionary for observability.
+        """
+        if self.readiness != Readiness.OPERATIONAL:
+            return {
+                "log_return": None,
+                "standard_deviation": None,
+                "z_score": None,
+                "low_z_count": None,
+                "is_discounted": None,
+                "is_euphoric": None,
+                "is_high_volatility": None,
+                "is_positive_trend": None,
+            }
+
+        return {
+            "log_return": self._log_return.current,
+            "standard_deviation": self._standard_deviation.current,
+            "z_score": self._z_score.current,
+            "low_z_count": self._low_z_count_in_last_n_candles.current,
+            "is_discounted": self._discount_spec.is_satisfied(),
+            "is_euphoric": self._euphoria_spec.is_satisfied(),
+            "is_high_volatility": self._high_volatility_spec.is_satisfied(),
+            "is_positive_trend": self._positive_trend_spec.is_satisfied(),
+        }
+
     def evaluate(self, current_price: float, current_position: Position, entry_price: Optional[float] = None) -> Action:
         """
         Calculate the suggested action given the current internal state (as determined by the call to `update()` at the end of each candle).
