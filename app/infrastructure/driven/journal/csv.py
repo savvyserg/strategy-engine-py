@@ -14,7 +14,7 @@ class CSVJournalAdapter(JournalPort):
     Concrete Adapter: Writes simulation results to a CSV file.
     Implements JournalPort.
     """
-    def __init__(self, file_name: str = 'output.csv'):
+    def __init__(self, file_name: str = 'output.csv', extra_headers: Optional[list[str]] = None):
         if not isinstance(file_name, str):
             raise ValueError(f"{type(self).__name__} expected file_name to be a str, found {type(file_name).__name__} '{file_name}'.")
 
@@ -30,7 +30,8 @@ class CSVJournalAdapter(JournalPort):
             raise FileNotFoundError(f"{type(self).__name__} Error: output file path parent directory '{parent_dir}' does not exist.")
 
         self._file_path = file_path
-        self._headers = ['timestamp', 'open', 'high', 'low', 'close', 'action', 'equity']
+        base_headers = ['timestamp', 'open', 'high', 'low', 'close', 'action', 'equity']
+        self._headers = base_headers if not extra_headers else [*base_headers, *extra_headers]
         self._initialize_file()
 
     def _initialize_file(self) -> None:
@@ -46,7 +47,8 @@ class CSVJournalAdapter(JournalPort):
         self,   
         candle: Candle, 
         action: Optional[Action], 
-        equity: float
+        equity: float,
+        extra_data: Optional[dict] = None,
     ) -> None:
         """
         Append a single row to the CSV.
@@ -56,12 +58,14 @@ class CSVJournalAdapter(JournalPort):
 
         with open(self._file_path, mode='a', newline='', encoding='utf-8') as f:
             writer = csv.DictWriter(f, fieldnames=self._headers)
-            writer.writerow({
+            row = {
                 'timestamp': candle.timestamp,
                 'open': candle.open,
                 'high': candle.high,
                 'low': candle.low,
                 'close': candle.close,
                 'action': action_str,
-                'equity': equity
-            })
+                'equity': equity,
+            }
+            row.update(extra_data)
+            writer.writerow(row)

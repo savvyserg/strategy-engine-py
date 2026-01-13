@@ -16,6 +16,7 @@ class JournalPort(Protocol):
         candle: Candle,
         action: Optional[Action],
         equity: float,
+        extra_data: Optional[dict]
     ) -> None:
         """
         Write a single row summarizing the complete state of a trading step.
@@ -26,5 +27,6 @@ class JournalPort(Protocol):
             candle: The market data for this step.
             action: The decision made by the strategy.
             equity: The total portfolio value (Cash + Holdings * Price) *after* trades.
+            extra_data: Optional variables one might want to journal (e.g. stratgy internals).
         """
         ...
