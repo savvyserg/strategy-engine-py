@@ -32,7 +32,7 @@ class SimulatedTradingEngine:
         self._strategy = strategy
         self._source = source
         self._journal = journal
-        
+
         # Internal Simulation State.
         self._cash: float = 100000.0  # Hardcoded start at $100k.
         self._held_quantity: int = 0
@@ -77,7 +77,8 @@ class SimulatedTradingEngine:
             self._journal.write(
                 candle=candle,
                 action=current_action_if_ready,
-                equity=current_equity
+                equity=current_equity,
+                extra_data=self._strategy.inspect(),
             )
 
     def _handle_buy(self, price: float) -> None:

@@ -19,10 +19,6 @@ def main():
         candle_source = CSVCandleSourceAdapter(file_name="input.csv")
         logger.info("[Init] CSV Candle Source ready.")
 
-        logger.info(f"[Init] Loading journal...")
-        journal = CSVJournalAdapter(file_name="output.csv")
-        logger.info("[Init] CSV Journal ready.")
-
         logger.info("[Init] Loading strategy engine...")
         if CONFIG_ADAPTER.random_strategy:
             strategy = RandomStrategy(config=CONFIG_ADAPTER)
@@ -30,6 +26,10 @@ def main():
         else:
             strategy = MeanReversionStrategy(config=CONFIG_ADAPTER)
         logger.info(f"[Init] Strategy '{type(strategy).__name__}' initialized.")
+
+        logger.info(f"[Init] Loading journal...")
+        journal = CSVJournalAdapter(file_name="output.csv", extra_headers=list(strategy.inspect().keys()))
+        logger.info("[Init] CSV Journal ready.")
 
         logger.info(f"[Ini] Loading trading engine...")
         engine = SimulatedTradingEngine(
