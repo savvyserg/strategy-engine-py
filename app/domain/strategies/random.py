@@ -32,6 +32,8 @@ class RandomStrategy(StrategyInterface):
             # if Neutral -> 50% Buy / 50% Neutral
             return random.choice((Action.BUY, Action.NEUTRAL))
 
+        raise RuntimeError(f"{type(self).__name__} encountered unhandled Position state '{current_position}'.")
+
     @property
     def readiness(self) -> Readiness:
         # Stateless random strategy is always ready.
