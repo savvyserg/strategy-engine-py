@@ -67,5 +67,6 @@ class CSVJournalAdapter(JournalPort):
                 'action': action_str,
                 'equity': equity,
             }
-            row.update(extra_data)
+            if extra_data:
+                row.update(extra_data)
             writer.writerow(row)
