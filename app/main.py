@@ -40,7 +40,7 @@ def main():
         logger.info("[Init] Simulated Trading Engine assembled.")
         logger.info("[Init] Initialization finalized successfully.")
     except Exception as e:
-        logger.error(f"[Init Fatal] Failed to initialize application: {e}")
+        logger.error(f"[Init Fatal] Failed to initialize application: {e}.")
         # Re-raise to ensure the process actually exits with an error code.
         raise e
 

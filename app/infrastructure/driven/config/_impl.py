@@ -13,7 +13,7 @@ class ConfigAdapter(DomainConfigPort):
         Make config properties immutable after initialization.
         """
         if hasattr(self, name):
-            raise AttributeError("immutable")
+            raise AttributeError("Configurations are immutable.")
         object.__setattr__(self, name, value)
 
     # Make config properties the only properties assignable to this object.
@@ -115,7 +115,7 @@ class ConfigAdapter(DomainConfigPort):
             except KeyError as e:
                 raise ValueError(f"Missing configuration key in {CONFIG_FILE_NAME}: {e}.") from e
             except Exception as e:
-                raise Exception(f"Failed to load configuration from {CONFIG_FILE_NAME}: {e}") from e
+                raise Exception(f"Failed to load configuration from {CONFIG_FILE_NAME}: {e}.") from e
 
     @property
     def random_strategy(self) -> bool:

@@ -152,7 +152,7 @@ class MeanReversionStrategy(StrategyInterface):
         if not isinstance(current_price, (int, float)) or isinstance(current_price, bool):
             raise TypeError(f"{type(self).__name__} expected current_price to be a number, got {type(current_price).__name__}.")
         if current_price <= 0:
-            raise ValueError(f"{type(self).__name__} expected current_price to be positive and non-zero, got {current_price}")
+            raise ValueError(f"{type(self).__name__} expected current_price to be positive and non-zero, got {current_price}.")
         if not isinstance(current_position, Position):
             raise TypeError(f"{type(self).__name__} expected current_position to be of type Position, got {type(current_position).__name__}.")
 

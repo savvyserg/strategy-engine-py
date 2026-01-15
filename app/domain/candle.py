@@ -24,11 +24,11 @@ class Candle:
         if not isinstance(open, (int, float)) or isinstance(open, bool):
             raise TypeError(f"Candle expected open to be a number, got {type(open).__name__}.")
         if not isinstance(high, (int, float)) or isinstance(high, bool):
-            raise TypeError(f"Candle expected high to be a number, got {type(high).__name__}")
+            raise TypeError(f"Candle expected high to be a number, got {type(high).__name__}.")
         if not isinstance(low, (int, float)) or isinstance(low, bool):
-            raise TypeError(f"Candle expected low to be a number, got {type(low).__name__}")
+            raise TypeError(f"Candle expected low to be a number, got {type(low).__name__}.")
         if not isinstance(close, (int, float)) or isinstance(close, bool):
-            raise TypeError(f"Candle expected close to be a number, got {type(close).__name__}")
+            raise TypeError(f"Candle expected close to be a number, got {type(close).__name__}.")
 
         # sanity check
         if open <= 0 or high <= 0 or low <= 0 or close <= 0:
