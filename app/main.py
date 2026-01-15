@@ -31,7 +31,7 @@ def main():
         journal = CSVJournalAdapter(file_name="output.csv", extra_headers=list(strategy.inspect().keys()))
         logger.info("[Init] CSV Journal ready.")
 
-        logger.info(f"[Ini] Loading trading engine...")
+        logger.info(f"[Init] Loading trading engine...")
         engine = SimulatedTradingEngine(
             strategy=strategy,
             source=candle_source,
