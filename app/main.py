@@ -44,7 +44,7 @@ def main():
         # Re-raise to ensure the process actually exits with an error code.
         raise e
 
-    logger.info("--- Execution Started ---")
+    logger.info("--- Starting Execution ---")
     try:
         engine.run()
         logger.info("--- Execution Finished Successfully ---")
