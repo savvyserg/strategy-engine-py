@@ -6,6 +6,8 @@ from app.domain.state import Position, Action, Readiness
 
 from app.domain.strategies.interface import StrategyInterface
 
+from app.domain.config_port import DomainConfigPort
+
 class RandomStrategy(StrategyInterface):
     """
     A strategy implementation that outputs random legal actions.
@@ -13,7 +15,7 @@ class RandomStrategy(StrategyInterface):
     """
     __slots__ = ()
 
-    def __init__(self):
+    def __init__(self, config: DomainConfigPort = None):
         # No state needed for random selection.
         pass
 
