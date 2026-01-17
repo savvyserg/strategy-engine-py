@@ -31,7 +31,8 @@ This project can be compiled into a standalone binary using **PyApp**.
 
 ### Cross-Compilation Tools (Optional)
 
-To build **Windows** and **Mac** binaries from a **Linux** machine, you need **Zig** and **Cargo Zigbuild**. Without these, the build script will fail on non-native targets due to missing system linkers.
+To perform **cross-compilation** (targeting different Operating Systems or CPU architectures), you need **Zig** and **Cargo Zigbuild**.
+Without these, the build script will fail on non-native targets due to missing system linkers.
 
 1.  **Install Zig Compiler:**
     * **Ubuntu/Debian (Snap):**
