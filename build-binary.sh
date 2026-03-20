@@ -3,7 +3,7 @@ set -e
 
 # --- CONFIGURATION ---
 # 1. Project Definitions
-PROJECT_NAME="quant-trader"
+PROJECT_NAME="strategy-engine"
 PROJECT_VERSION="0.1.0"
 PYTHON_PKG_NAME="app"
 
@@ -56,7 +56,7 @@ fi
 echo "[2/4] Building Python Wheel..."
 
 # Ensure we use the specific pyenv version
-PYENV_VERSION=quant-trader-3.13.7 pyenv exec python -m build --wheel
+PYENV_VERSION=strategy-engine-3.13.7 pyenv exec python -m build --wheel
 
 WHEEL_REL_PATH=$(ls dist/*.whl | head -n 1)
 WHEEL_FILENAME=$(basename "$WHEEL_REL_PATH")

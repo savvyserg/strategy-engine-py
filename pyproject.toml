@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "quant-trader"
+name = "strategy-engine"
 version = "0.1.0"
 requires-python = ">=3.13"
 dependencies = [
@@ -17,7 +17,7 @@ dev = [
 
 [project.scripts]
 # This tells python that "python -m app.main" is the entry
-quant-trader = "app.main:main"
+strategy-engine = "app.main:main"
 
 # VITAL: This maps your folder structure correctly
 [tool.hatch.build.targets.wheel]
