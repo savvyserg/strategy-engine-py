@@ -1,4 +1,4 @@
-# Simulated Trading Engine
+# Strategy Engine
 
 A Python-based trading simulation engine that tests strategies against historical candle data.
 
