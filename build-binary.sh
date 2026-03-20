@@ -55,8 +55,22 @@ fi
 # --- STEP 2: BUILD PYTHON WHEEL ---
 echo "[2/4] Building Python Wheel..."
 
-# Ensure we use the specific pyenv version
-PYENV_VERSION=strategy-engine-3.13.7 pyenv exec python -m build --wheel
+# Enforce the correct Python version using the .python-version file
+if [ -f "$PROJECT_ROOT/.python-version" ]; then
+    # Extract just the major.minor version (e.g., 3.13 from 3.13.7)
+    EXPECTED_PYTHON=$(cut -d '.' -f1,2 "$PROJECT_ROOT/.python-version")
+    CURRENT_PYTHON=$(python -c 'import sys; print(f"{sys.version_info.major}.{sys.version_info.minor}")' 2>/dev/null || echo "none")
+
+    if [ "$CURRENT_PYTHON" != "$EXPECTED_PYTHON" ]; then
+        echo "CRITICAL ERROR: Python $EXPECTED_PYTHON is required (found $CURRENT_PYTHON)."
+        echo "Please activate your virtual environment."
+        exit 1
+    fi
+else
+    echo "WARNING: .python-version file not found. Skipping version check."
+fi
+
+python -m build --wheel
 
 WHEEL_REL_PATH=$(ls dist/*.whl | head -n 1)
 WHEEL_FILENAME=$(basename "$WHEEL_REL_PATH")
