@@ -72,14 +72,19 @@ fi
 
 python -m build --wheel
 
-WHEEL_REL_PATH=$(ls dist/*.whl | head -n 1)
-WHEEL_FILENAME=$(basename "$WHEEL_REL_PATH")
-FULL_WHEEL_PATH="$PROJECT_ROOT/dist/$WHEEL_FILENAME"
+# Strictly resolve the wheel artifact
+WHEELS=("$PROJECT_ROOT"/dist/*.whl)
 
-if [ ! -f "$FULL_WHEEL_PATH" ]; then
-    echo "CRITICAL ERROR: Wheel creation failed."
+# Check if we have exactly 1 wheel file (and that it actually exists, to handle empty globs)
+if [ ${#WHEELS[@]} -ne 1 ] || [ ! -e "${WHEELS[0]}" ]; then
+    echo "CRITICAL ERROR: Expected exactly 1 wheel in dist/, found ${#WHEELS[@]}."
+    echo "Please clear the dist/ directory or check the build output."
     exit 1
 fi
+
+FULL_WHEEL_PATH="${WHEELS[0]}"
+WHEEL_FILENAME=$(basename "$FULL_WHEEL_PATH")
+
 echo "  -> Wheel built: $WHEEL_FILENAME"
 
 
