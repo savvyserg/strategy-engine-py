@@ -22,7 +22,7 @@ This project can be compiled into a standalone binary using **PyApp**.
 2. **PyApp Source:** Must exist in a sibling directory.
    *We pin version `v0.29.0` to ensure build stability.*
   ```bash
-  git clone --branch v0.29.0 https://github.com/ofek/pyapp ../pyapp-latest
+  git clone --branch v0.29.0 https://github.com/ofek/pyapp ../pyapp
   ```
 3. **Python Build Dependencies** Install the project and build tools (required for `build-binary.sh`):
   ```bash

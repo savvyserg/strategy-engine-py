@@ -8,7 +8,7 @@ PROJECT_VERSION="0.1.0"
 PYTHON_PKG_NAME="app"
 
 # 2. Path to the PyApp Source Code (Rust Builder)
-PYAPP_SOURCE_DIR="../pyapp-latest"
+PYAPP_SOURCE_DIR="../pyapp"
 
 # 3. Detect Current Directory
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
